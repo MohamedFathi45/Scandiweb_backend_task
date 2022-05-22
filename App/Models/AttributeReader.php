@@ -17,8 +17,7 @@ class AttributeReader extends Attribute{
 
     public function destructure_attributes($arr){
         while ($row = $arr->fetch(PDO::FETCH_NUM)) {
-            $this->attributes[$row[1]] = $row[0];
-            echo ( $row[1]);
+            $this->attributes[$row[0]] = $row[1];
             array_push(self::$map , $row[1]);
           }
     }

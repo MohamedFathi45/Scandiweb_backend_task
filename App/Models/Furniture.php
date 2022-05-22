@@ -3,21 +3,28 @@
 
 namespace App\Models;
 
-use PDO;
 
 class Furniture extends Product{
+    static $table= "Furniture";
     protected static $attributes = array();
     protected static $map = array();
-    function __construct($db , $types){
-        $this->productTypes = $types;
-        self::$table= "Furniture";
+    function __construct($db){
         $this->db = $db;
-        $this->attribute_reader = new AttributeReader($this->productTypes[self::$table] ,$this->db);
+        $this->type = self::$table;
+        $this->attribute_reader = new AttributeReader(array_search(self::$table , ProductType::getInstance($this->db)->types) ,$this->db);
     }
 
-    function createProduct($type){
-        
+    function readConreteAttribues(){
+        $stmt = $this->db->readConreteAttribues($this->id);
+        while($row = $stmt->fetch()){
+            array_push($this->concreteAttributes , $row);
+        }
     }
-
+    function getDisplayString(){
+        return 'Dimensions: ' .$this->concreteAttributes['length'].'x' . $this->concreteAttributes['width'] .'x'. $this->concreteAttributes['height'];
+    }
+    static function getClassName(){
+        return self::$table;
+    }
 }
 ?>
