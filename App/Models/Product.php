@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Models;
+
+use JsonSerializable;
 use PDO;
 
- abstract class Product{
+ abstract class Product implements JsonSerializable{
 
     protected static $products = array();
     public $db;
@@ -22,8 +24,8 @@ use PDO;
             $product = $factory->getProduct(ProductType::getInstance($db)->types[$row['product_type_id']] , $row);
             array_push(self::$products , $product);
         }
-
-        return self::$products;
+        $arr['data'] = self::$products;
+        return $arr;
     }
 
     function getConcreteAttributes(){

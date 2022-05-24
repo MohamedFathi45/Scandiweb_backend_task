@@ -56,7 +56,7 @@ class MysqlDatabase extends Database{       // mysql database controller
 
     public function readConreteAttribues($id){
        
-        $query = "SELECT * FROM attribute_values WHERE id = ANY(select attribute_value_id from product_details where product_id = :id)";   
+        $query = "SELECT * FROM attribute_values WHERE id = ANY(select attribute_value_id from product_details where product_id = :id)";
         $stmt = $this->conn->prepare($query);
         $stmt->execute(['id'=>$id]);   
         return $stmt; 

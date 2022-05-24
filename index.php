@@ -1,5 +1,9 @@
 <?php
 
+
+header("Access-Control-Allow-Origin: *");
+header('Content-Type: application/json');
+
 use App\Config\MysqlDatabase;
 use App\Models\Store;
 
@@ -11,6 +15,8 @@ $store = new Store($mySql);
 
 $products = $store->getProducts();
 
+$obj = json_encode($products);
+echo $obj;
 
 
 ?>
