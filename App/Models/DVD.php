@@ -28,6 +28,9 @@ class DVD extends Product{
     static function getClassName(){
         return self::$table;
     }
+    function setDisplayString(){
+       $this->displayString =  'Size :' . $this->concreteAttributes[0]['value'].' MB';
+    }
     
 }
 ?>

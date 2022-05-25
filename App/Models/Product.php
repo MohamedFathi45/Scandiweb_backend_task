@@ -14,6 +14,7 @@ use PDO;
     protected $name;
     protected $price;
     protected $type;
+    protected $displayString;
     protected $concreteAttributes = array();
     protected $attribute_reader;
  
@@ -45,7 +46,7 @@ use PDO;
     function setPrice($price){$this->price = $price;}
     abstract static function getClassName();
     abstract function readConreteAttribues();
-    //abstract function getDisplayString();   // every product should have attributes to display (ie size , weight ,...etc)
+    abstract function setDisplayString();   // every product should have attributes to display (ie size , weight ,...etc)
 }
 
 ?>

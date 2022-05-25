@@ -25,8 +25,8 @@ class Furniture extends Product{
             array_push($this->concreteAttributes , $row);
         }
     }
-    function getDisplayString(){
-        return 'Dimensions: ' .$this->concreteAttributes['length'].'x' . $this->concreteAttributes['width'] .'x'. $this->concreteAttributes['height'];
+    function setDisplayString(){
+        $this->displayString =  'Dimensions: ' .$this->concreteAttributes[0]['value'].'x' . $this->concreteAttributes[1]['value'] .'x'. $this->concreteAttributes[2]['value'];
     }
     static function getClassName(){
         return self::$table;

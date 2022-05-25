@@ -13,6 +13,7 @@ abstract class Factory{
         $product->setSku($sku);
         $product->setPrice($price);
         $product->readConreteAttribues();
+        $product->setDisplayString();
         return $product;
     }
 
