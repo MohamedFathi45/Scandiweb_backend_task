@@ -16,7 +16,7 @@ use PDO;
     protected $type;
     protected $displayString;
     protected $concreteAttributes = array();
-    protected $attribute_reader;
+    public $attribute_reader;
  
     static function getProducts($db , $factory){
         $stmt = $db->read_products();
@@ -29,21 +29,42 @@ use PDO;
         return $arr;
     }
 
-    function getConcreteAttributes(){
-        return $this->concreteAttributes;
+    static function getGeneralTypes($db){
+        $products = array();
+        foreach(ProductType::getInstance($db)->types as $productKey => $productValue){
+            $calssName = 'App\\Models\\'. ($productValue);
+            $product = new $calssName($db);
+            
+            $products[$productValue] = array();
+            foreach ($product->attribute_reader->getTypeAttributes() as $attributeKey =>$attributeValue){
+                array_push($products[$productValue] , $attributeValue);
+            }
+        }
+        return $products;
     }
+
+    static function addProduct($row , $db , $factory){       // product is array of product attributes
+        $product = $factory->getProduct($row['type'] , $row);
+        
+    }
+
+    static function deleteProducts($db ,$productsId){
+        $stmt = $db->deleteProducts($productsId);
+    }
+
+    function getConcreteAttributes(){return $this->concreteAttributes;}
     function getId(){return $this->id;}
     function getName(){return $this->name;}
     function getSku(){return $this->sku;}
     function getPrice(){return $this->price;}
     function getType(){return $this->type;}
 
-
-
     function setId($id){$this->id = $id;}
     function setSku($sku){$this->sku = $sku;}
     function setName($name){$this->name = $name;}
     function setPrice($price){$this->price = $price;}
+
+    
     abstract static function getClassName();
     abstract function readConreteAttribues();
     abstract function setDisplayString();   // every product should have attributes to display (ie size , weight ,...etc)

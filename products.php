@@ -1,6 +1,4 @@
 <?php
-
-
 header("Access-Control-Allow-Origin: *");
 header('Content-Type: application/json');
 
@@ -14,16 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     echo json_encode($res);
     die();
 }
-
 require_once "vendor/autoload.php";
 
-
 $store = Store::getInstance();
+$products = $store->getGeneralTypes();
 
-$products = $store->getProducts();
-
-$obj = json_encode($products);
-echo $obj;
-
+$ret['data'] = $products;
+echo json_encode($ret);
 
 ?>

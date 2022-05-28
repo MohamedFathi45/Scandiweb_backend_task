@@ -1,6 +1,7 @@
 <?php
 namespace App\Config;
 
+use App\Models\ProductType;
 use PDO;
 use PDOException;
 class MysqlDatabase extends Database{       // mysql database controller
@@ -59,6 +60,20 @@ class MysqlDatabase extends Database{       // mysql database controller
         $query = "SELECT * FROM attribute_values WHERE id = ANY(select attribute_value_id from product_details where product_id = :id)";
         $stmt = $this->conn->prepare($query);
         $stmt->execute(['id'=>$id]);   
+        return $stmt; 
+    }
+
+    public function deleteProducts($productsId){
+        $query = "delete  FROM product WHERE id = ANY(:ids)";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute(['ids'=>$productsId]);   
+        return $stmt;   // deleted products (count)
+    }
+    public function addProduct($product , $row){
+        $product_type_id = array_search($product['type'] , ProductType::getInstance($this->db)->types);
+        $query = "INSERT INTO product ('product_type_id','sku' ,'name' , 'price')  OUTPUT Inserted.id VALUES (:product_type_id , :sku , :name , :price)";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute(['product_type_id'=>$product_type_id , 'sku' => $product->getSku() , 'name' => $product->getName() , 'price' => $product->getPrice()]);   
         return $stmt; 
     }
 

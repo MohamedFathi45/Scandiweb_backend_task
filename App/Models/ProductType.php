@@ -23,7 +23,7 @@ class ProductType{
             self::$instance = new ProductType($db);
         }
         return self::$instance;
-  }
+    }
 
 }
 

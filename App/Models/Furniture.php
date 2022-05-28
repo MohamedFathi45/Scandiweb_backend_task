@@ -26,10 +26,21 @@ class Furniture extends Product{
         }
     }
     function setDisplayString(){
-        $this->displayString =  'Dimensions: ' .$this->concreteAttributes[0]['value'].'x' . $this->concreteAttributes[1]['value'] .'x'. $this->concreteAttributes[2]['value'];
+        $height_value = $this->getProp('height');// iterating over the list O(n) "n most likely to be less than 50"
+        $width_value = $this->getProp('width');
+        $length_value = $this->getProp('length');
+        
+        $this->displayString =  'Dimensions: ' .$height_value.'x' . $width_value .'x'. $length_value.' CM';
     }
     static function getClassName(){
         return self::$table;
+    }
+    function getProp($prop){        
+        foreach($this->concreteAttributes  as $element) {
+            if($element['name'] == $prop){
+                return $element['value'];
+            }
+        }
     }
 }
 ?>

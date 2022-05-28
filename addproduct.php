@@ -6,7 +6,7 @@ header('Content-Type: application/json');
 
 use App\Models\Store;
 
-if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $res = array(
         'status' =>'403',
         'message' =>'Forbidden'
@@ -17,13 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 
 require_once "vendor/autoload.php";
 
-
+$input = file_get_contents("php://input");
+$product =  json_decode($input , true);
 $store = Store::getInstance();
-
-$products = $store->getProducts();
-
-$obj = json_encode($products);
-echo $obj;
-
+$store->addProduct($product);
 
 ?>
