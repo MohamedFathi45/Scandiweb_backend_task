@@ -2,6 +2,7 @@
 namespace App\Config;
 
 use App\Models\ProductType;
+use Attribute;
 use PDO;
 use PDOException;
 class MysqlDatabase extends Database{       // mysql database controller
@@ -64,17 +65,34 @@ class MysqlDatabase extends Database{       // mysql database controller
     }
 
     public function deleteProducts($productsId){
-        $query = "delete  FROM product WHERE id = ANY(:ids)";
+        $ids = join(",",$productsId); 
+        $query = "delete  FROM product WHERE id IN(:ids)";
         $stmt = $this->conn->prepare($query);
-        $stmt->execute(['ids'=>$productsId]);   
+        $stmt->execute(['ids'=>$ids]);   
         return $stmt;   // deleted products (count)
     }
-    public function addProduct($product , $row){
-        $product_type_id = array_search($product['type'] , ProductType::getInstance($this->db)->types);
-        $query = "INSERT INTO product ('product_type_id','sku' ,'name' , 'price')  OUTPUT Inserted.id VALUES (:product_type_id , :sku , :name , :price)";
+    public function addProduct($product){
+        $product_type_id = array_search($product->getType() , ProductType::getInstance($this)->types);
+        echo $product_type_id . '  ' . $product->getSku() .'  '. $product->getName() . '  '.$product->getPrice();
+        $query = "INSERT INTO product (product_type_id , sku ,name , price)   VALUES (:product_type_id , :sku , :name , :price)";
         $stmt = $this->conn->prepare($query);
-        $stmt->execute(['product_type_id'=>$product_type_id , 'sku' => $product->getSku() , 'name' => $product->getName() , 'price' => $product->getPrice()]);   
-        return $stmt; 
+        $stmt->execute(['product_type_id'=>$product_type_id ,'sku' => $product->getSku() , 'name' => $product->getName() , 'price' => $product->getPrice()]);   
+        $product_id =  $this->conn->lastInsertId();
+
+        foreach($product->getConcreteAttributes() as $attribute){
+            $attribute_id = $attribute['attribute_id'];
+            $value = $attribute['value'];
+            $query = "INSERT INTO attribute_values (attribute_id,value)  VALUES (:attribute_id ,:value)";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute(['attribute_id' =>$attribute_id , 'value'=>$value]);   
+            $attribute_id =  $this->conn->lastInsertId();
+            
+            echo $attribute_id;
+
+            $query = "INSERT INTO product_details (product_id,attribute_value_id)  VALUES (:product_id ,:attribute_value_id)";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute(['product_id' =>$product_id , 'attribute_value_id'=>$attribute_id]);     
+        }
     }
 
 }

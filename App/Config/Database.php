@@ -13,7 +13,7 @@ abstract class Database{
     abstract public function read_type_attributes($id );
     abstract public function readConreteAttribues($id);
     abstract public function deleteProducts($productsId);
-    abstract public function addProduct($product , $row);
+    abstract public function addProduct($product);
 
     public function get_db_name(){
         return $this->db_name;

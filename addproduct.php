@@ -2,7 +2,7 @@
 
 
 header("Access-Control-Allow-Origin: *");
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 
 use App\Models\Store;
 
@@ -18,8 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 require_once "vendor/autoload.php";
 
 $input = file_get_contents("php://input");
-$product =  json_decode($input , true);
-$store = Store::getInstance();
-$store->addProduct($product);
+$obj = json_decode($input); //obj is array of feilds
+$row = json_decode(json_encode($obj), true);
+
+ $store = Store::getInstance();
+ $store->addProduct($row);
+
+
 
 ?>

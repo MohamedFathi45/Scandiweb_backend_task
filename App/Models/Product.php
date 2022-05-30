@@ -44,12 +44,13 @@ use PDO;
     }
 
     static function addProduct($row , $db , $factory){       // product is array of product attributes
-        $product = $factory->getProduct($row['type'] , $row);
-        
+        $product = $factory->setProduct($row['type'] , $row);
+        //echo json_encode($product);
+        $db->addProduct($product);
     }
 
-    static function deleteProducts($db ,$productsId){
-        $stmt = $db->deleteProducts($productsId);
+    static function deleteProducts($db ,$productsId){ 
+         $stmt = $db->deleteProducts($productsId);
     }
 
     function getConcreteAttributes(){return $this->concreteAttributes;}
@@ -63,10 +64,11 @@ use PDO;
     function setSku($sku){$this->sku = $sku;}
     function setName($name){$this->name = $name;}
     function setPrice($price){$this->price = $price;}
-
+    function setType($type){$this->type =  $type;}
     
     abstract static function getClassName();
     abstract function readConreteAttribues();
+    abstract function setProductAttributes($row);
     abstract function setDisplayString();   // every product should have attributes to display (ie size , weight ,...etc)
 }
 

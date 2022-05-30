@@ -30,11 +30,12 @@ class Store{
         return $products;
     }
     public function deleteProducts($productsId){
+       
         Product::deleteProducts($this->databaseController,$productsId);
     }
 
     public function addProduct($product){       // product at this time is array
-        //Product::addProduct($product);
+        Product::addProduct($product , $this->databaseController ,$this->factory );
     }
 }
 

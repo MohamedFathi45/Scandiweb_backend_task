@@ -25,6 +25,18 @@ class DVD extends Product{
         }
     }
 
+    function setProductAttributes($row){
+        foreach($this->attribute_reader->getTypeAttributes() as $attribute){
+            $row[$attribute];
+            $attribute_id = array_search($attribute , $this->attribute_reader->getTypeAttributes());
+            $attribute_value = $row[$attribute];
+            $r = array();
+            $r['attribute_id'] = $attribute_id;
+            $r['value'] = $attribute_value;
+            array_push($this->concreteAttributes , $r);
+        }
+    }
+
     static function getClassName(){
         return self::$table;
     }
