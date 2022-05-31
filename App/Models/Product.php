@@ -15,6 +15,7 @@ use PDO;
     protected $price;
     protected $type;
     protected $displayString;
+    protected $concreteAttributeReader;
     protected $concreteAttributes = array();
     public $attribute_reader;
  
@@ -52,6 +53,8 @@ use PDO;
     static function deleteProducts($db ,$productsId){ 
          $stmt = $db->deleteProducts($productsId);
     }
+
+    
 
     function getConcreteAttributes(){return $this->concreteAttributes;}
     function getId(){return $this->id;}

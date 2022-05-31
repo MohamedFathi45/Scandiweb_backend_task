@@ -30,7 +30,7 @@ class Store{
         return $products;
     }
     public function deleteProducts($productsId){
-       
+   
         Product::deleteProducts($this->databaseController,$productsId);
     }
 

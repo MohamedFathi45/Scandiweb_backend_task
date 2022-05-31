@@ -20,7 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 require_once "vendor/autoload.php";
 
 $input = file_get_contents("php://input");
+
 $obj = json_decode($input);
+
 $store = Store::getInstance();
 $store->deleteProducts($obj->data);
 

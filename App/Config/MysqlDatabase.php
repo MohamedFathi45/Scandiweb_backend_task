@@ -66,10 +66,10 @@ class MysqlDatabase extends Database{       // mysql database controller
 
     public function deleteProducts($productsId){
         $ids = join(",",$productsId); 
-        $query = "delete  FROM product WHERE id IN(:ids)";
+        $query = "delete  FROM product WHERE id IN($ids)";
         $stmt = $this->conn->prepare($query);
-        $stmt->execute(['ids'=>$ids]);   
-        return $stmt;   // deleted products (count)
+        $stmt->execute();   
+        return $stmt; 
     }
     public function addProduct($product){
         $product_type_id = array_search($product->getType() , ProductType::getInstance($this)->types);

@@ -11,6 +11,8 @@ return array(
     'App\\Models\\Attribute' => $baseDir . '/App/Models/Attribute.php',
     'App\\Models\\AttributeReader' => $baseDir . '/App/Models/AttributeReader.php',
     'App\\Models\\Book' => $baseDir . '/App/Models/Book.php',
+    'App\\Models\\ConcreteAttribute' => $baseDir . '/App/Models/ConcreteAttribute.php',
+    'App\\Models\\ConcreteAttributeReader' => $baseDir . '/App/Models/ConcreteAttributeReader.php',
     'App\\Models\\DVD' => $baseDir . '/App/Models/DVD.php',
     'App\\Models\\Factory' => $baseDir . '/App/Models/Factory.php',
     'App\\Models\\Furniture' => $baseDir . '/App/Models/Furniture.php',

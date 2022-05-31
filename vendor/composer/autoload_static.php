@@ -26,6 +26,8 @@ class ComposerStaticInit8f25607d9b56287581ff2559ead686c2
         'App\\Models\\Attribute' => __DIR__ . '/../..' . '/App/Models/Attribute.php',
         'App\\Models\\AttributeReader' => __DIR__ . '/../..' . '/App/Models/AttributeReader.php',
         'App\\Models\\Book' => __DIR__ . '/../..' . '/App/Models/Book.php',
+        'App\\Models\\ConcreteAttribute' => __DIR__ . '/../..' . '/App/Models/ConcreteAttribute.php',
+        'App\\Models\\ConcreteAttributeReader' => __DIR__ . '/../..' . '/App/Models/ConcreteAttributeReader.php',
         'App\\Models\\DVD' => __DIR__ . '/../..' . '/App/Models/DVD.php',
         'App\\Models\\Factory' => __DIR__ . '/../..' . '/App/Models/Factory.php',
         'App\\Models\\Furniture' => __DIR__ . '/../..' . '/App/Models/Furniture.php',
