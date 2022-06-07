@@ -21,20 +21,6 @@ class ComposerStaticInit8f25607d9b56287581ff2559ead686c2
     );
 
     public static $classMap = array (
-        'App\\Config\\Database' => __DIR__ . '/../..' . '/App/Config/Database.php',
-        'App\\Config\\MysqlDatabase' => __DIR__ . '/../..' . '/App/Config/MysqlDatabase.php',
-        'App\\Models\\Attribute' => __DIR__ . '/../..' . '/App/Models/Attribute.php',
-        'App\\Models\\AttributeReader' => __DIR__ . '/../..' . '/App/Models/AttributeReader.php',
-        'App\\Models\\Book' => __DIR__ . '/../..' . '/App/Models/Book.php',
-        'App\\Models\\ConcreteAttribute' => __DIR__ . '/../..' . '/App/Models/ConcreteAttribute.php',
-        'App\\Models\\ConcreteAttributeReader' => __DIR__ . '/../..' . '/App/Models/ConcreteAttributeReader.php',
-        'App\\Models\\DVD' => __DIR__ . '/../..' . '/App/Models/DVD.php',
-        'App\\Models\\Factory' => __DIR__ . '/../..' . '/App/Models/Factory.php',
-        'App\\Models\\Furniture' => __DIR__ . '/../..' . '/App/Models/Furniture.php',
-        'App\\Models\\Product' => __DIR__ . '/../..' . '/App/Models/Product.php',
-        'App\\Models\\ProductFactory' => __DIR__ . '/../..' . '/App/Models/ProductFactory.php',
-        'App\\Models\\ProductType' => __DIR__ . '/../..' . '/App/Models/ProductType.php',
-        'App\\Models\\Store' => __DIR__ . '/../..' . '/App/Models/Store.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
