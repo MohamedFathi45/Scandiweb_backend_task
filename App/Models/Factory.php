@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+abstract class Factory
+{
 
-abstract class Factory{
-
-    public function getProduct($type , $row){       // for case of getting product from the databas
+    public function getProduct($type, $row)
+    { // for case of getting product from the databas
         $product = $this->createProduct($type);
         extract($row);
         $product->setId($id);
@@ -18,7 +19,8 @@ abstract class Factory{
         return $product;
     }
 
-    public function setProduct($type , $row){         //for case of setting the product in the database
+    public function setProduct($type, $row)
+    { //for case of setting the product in the database
         $product = $this->createProduct($type);
         extract($row);
         $product->setType($type);
@@ -28,8 +30,6 @@ abstract class Factory{
         $product->setProductAttributes($row);
         return $product;
     }
-    abstract function createProduct($type);    
+    abstract public function createProduct($type);
 
 }
-
-?>

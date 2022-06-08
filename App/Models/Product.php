@@ -5,7 +5,8 @@ namespace App\Models;
 use JsonSerializable;
 use PDO;
 
- abstract class Product implements JsonSerializable{
+abstract class Product implements JsonSerializable
+{
 
     protected static $products = array();
     public $db;
@@ -18,61 +19,72 @@ use PDO;
     protected $concreteAttributeReader;
     protected $concreteAttributes = array();
     public $attribute_reader;
- 
-    static function getProducts($db , $factory){
+
+    public static function getProducts($db, $factory)
+    {
         $stmt = $db->read_products();
-        while($row = $stmt->fetch(  PDO::FETCH_ASSOC  )){
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             extract($row);
-            $product = $factory->getProduct(ProductType::getInstance($db)->types[$row['product_type_id']] , $row);
-            array_push(self::$products , $product);
+            $product = $factory->getProduct(ProductType::getInstance($db)->types[$row['product_type_id']], $row);
+            array_push(self::$products, $product);
         }
         $arr['data'] = self::$products;
         return $arr;
     }
 
-    static function getGeneralTypes($db){
+    public static function getGeneralTypes($db)
+    {
         $products = array();
-        foreach(ProductType::getInstance($db)->types as $productKey => $productValue){
-            $calssName = 'App\\Models\\'. ($productValue);
+        foreach (ProductType::getInstance($db)->types as $productKey => $productValue) {
+            $calssName = 'App\\Models\\' . ($productValue);
             $product = new $calssName($db);
-            
+
             $products[$productValue] = array();
-            foreach ($product->attribute_reader->getTypeAttributes() as $attributeKey =>$attributeValue){
-                array_push($products[$productValue] , $attributeValue);
+            foreach ($product->attribute_reader->getTypeAttributes() as $attributeKey => $attributeValue) {
+                array_push($products[$productValue], $attributeValue);
             }
         }
         return $products;
     }
 
-    static function addProduct($row , $db , $factory){       // product is array of product attributes
-        $product = $factory->setProduct($row['type'] , $row);
+    public static function addProduct($row, $db, $factory)
+    { // product is array of product attributes
+        $product = $factory->setProduct($row['type'], $row);
         //echo json_encode($product);
         $db->addProduct($product);
     }
 
-    static function deleteProducts($db ,$productsId){ 
-         $stmt = $db->deleteProducts($productsId);
+    public static function deleteProducts($db, $productsId)
+    {
+        $stmt = $db->deleteProducts($productsId);
     }
 
-    
+    public function getConcreteAttributes()
+    {return $this->concreteAttributes;}
+    public function getId()
+    {return $this->id;}
+    public function getName()
+    {return $this->name;}
+    public function getSku()
+    {return $this->sku;}
+    public function getPrice()
+    {return $this->price;}
+    public function getType()
+    {return $this->type;}
 
-    function getConcreteAttributes(){return $this->concreteAttributes;}
-    function getId(){return $this->id;}
-    function getName(){return $this->name;}
-    function getSku(){return $this->sku;}
-    function getPrice(){return $this->price;}
-    function getType(){return $this->type;}
+    public function setId($id)
+    {$this->id = $id;}
+    public function setSku($sku)
+    {$this->sku = $sku;}
+    public function setName($name)
+    {$this->name = $name;}
+    public function setPrice($price)
+    {$this->price = $price;}
+    public function setType($type)
+    {$this->type = $type;}
 
-    function setId($id){$this->id = $id;}
-    function setSku($sku){$this->sku = $sku;}
-    function setName($name){$this->name = $name;}
-    function setPrice($price){$this->price = $price;}
-    function setType($type){$this->type =  $type;}
-    
-    abstract static function getClassName();
-    abstract function readConreteAttribues();
-    abstract function setProductAttributes($row);
-    abstract function setDisplayString();   // every product should have attributes to display (ie size , weight ,...etc)
+    abstract public static function getClassName();
+    abstract public function readConreteAttribues();
+    abstract public function setProductAttributes($row);
+    abstract public function setDisplayString(); // every product should have attributes to display (ie size , weight ,...etc)
 }
-
-?>

@@ -1,36 +1,40 @@
 <?php
 
-
 namespace App\Models;
-use PDO;
-class DVD extends Product{
+
+class DVD extends Product
+{
 
     static $table = 'DVD';
     protected static $attributes = array();
-    function __construct($db){
+    public function __construct($db)
+    {
         $this->db = $db;
         $this->type = self::$table;
-        $this->attribute_reader = new AttributeReader(array_search(self::$table , ProductType::getInstance($this->db)->types) ,$this->db);
+        $this->attribute_reader = new AttributeReader(array_search(self::$table, ProductType::getInstance($this->db)->types), $this->db);
         $this->concreteAttributeReader = new ConcreteAttributeReader();
     }
     public function jsonSerialize()
     {
         return get_object_vars($this);
     }
-    function readConreteAttribues(){
+    public function readConreteAttribues()
+    {
         $this->concreteAttributes = $this->concreteAttributeReader->read_concrete_attributes($this);
     }
 
-    function setProductAttributes($row){
-        $this->concreteAttributes = $this->concreteAttributeReader->setProductAttributes($this ,$row);
+    public function setProductAttributes($row)
+    {
+        $this->concreteAttributes = $this->concreteAttributeReader->setProductAttributes($this, $row);
     }
 
-    static function getClassName(){
+    public static function getClassName()
+    {
         return self::$table;
     }
-    function setDisplayString(){
-       $this->displayString =  'Size :' . $this->concreteAttributes[0]['value'].' MB';
+    public function setDisplayString()
+    {
+        $this->displayString = 'Size :' . $this->concreteAttributes[0]['value'] . ' MB';
     }
-    
+
 }
-?>

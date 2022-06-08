@@ -1,16 +1,15 @@
 <?php
 namespace App\Models;
 
-abstract class Attribute{
+abstract class Attribute
+{
     protected $type_id;
     protected $db;
     protected $attributes;
-    abstract function read_type_attributes(); 
+    abstract public function read_type_attributes();
 
-    function getTypeAttributes(){
+    public function getTypeAttributes()
+    {
         return $this->attributes;
     }
 }
-
-
-?>

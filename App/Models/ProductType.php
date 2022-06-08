@@ -4,7 +4,8 @@ namespace App\Models;
 
 use PDO;
 
-class ProductType{
+class ProductType
+{
 
     private static $instance = null;
     public $types = array();
@@ -13,18 +14,18 @@ class ProductType{
         $stmt = $db->read_types();
         $this->destructure_types($stmt);
     }
-    public function destructure_types($arr){
+    public function destructure_types($arr)
+    {
         while ($row = $arr->fetch(PDO::FETCH_NUM)) {
             $this->types[$row[0]] = $row[1];
-          }
+        }
     }
-    public static function getInstance($db){
-        if (self::$instance == null){
+    public static function getInstance($db)
+    {
+        if (self::$instance == null) {
             self::$instance = new ProductType($db);
         }
         return self::$instance;
     }
 
 }
-
-?>
