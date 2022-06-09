@@ -8,31 +8,20 @@ use App\Views\Store;
 require_once "vendor/autoload.php";
 
 $app = Store::getInstance();
-$app->router->get('/scandiweb_task/index.php', function () {
-    $store = Store::getInstance();
-    $products = $store->getProducts();
-    $obj = json_encode($products);
-    echo $obj;
+$app->router->get('/scandiweb_task/index.php', function () use ($app){
+    $app->getProducts();
 });
 
-$app->router->get('/scandiweb_task/index.php/products', function () {
-    $store = Store::getInstance();
-    $products = $store->getGeneralTypes();
-    $ret['data'] = $products;
-    echo json_encode($ret);
+$app->router->get('/scandiweb_task/index.php/products', function ()use ($app) {
+    $app->getGeneralTypes();
 });
-$app->router->post('/scandiweb_task/index.php/addproduct', function () {
+$app->router->post('/scandiweb_task/index.php/addproduct', function ()use ($app) {
     $input = file_get_contents("php://input");
-    $obj = json_decode($input); //obj is array of feilds
-    $row = json_decode(json_encode($obj), true);
-    $store = Store::getInstance();
-    $store->addProduct($row);
+    $app->addProduct($input);
 });
-$app->router->post('/scandiweb_task/index.php/deleteproduct', function () {
+$app->router->post('/scandiweb_task/index.php/deleteproduct', function ()use ($app) {
     $input = file_get_contents("php://input");
-    $obj = json_decode($input);
-    $store = Store::getInstance();
-    $store->deleteProducts($obj->data);
+    $app->deleteProducts($input);
 });
 
 $app->router->run();

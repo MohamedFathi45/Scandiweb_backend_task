@@ -26,19 +26,23 @@ class Store
 
     public function getProducts()
     {
-        return $this->controller->getProducts();
+        $products = $this->controller->getProducts();
+        $obj = json_encode($products);
+        echo $obj;
     }
     public function getGeneralTypes()
     {
-        return $this->controller->getGeneralTypes();
+        $products = $this->controller->getGeneralTypes();
+        $ret['data'] = $products;
+        echo json_encode($ret);
     }
-    public function deleteProducts($productsId)
+    public function deleteProducts($input)
     {
-        $this->controller->deleteProducts($productsId);
+        $this->controller->deleteProducts($input);
     }
 
-    public function addProduct($product)
+    public function addProduct($input)
     { // product at this time is array
-        $this->controller->addProduct($product);
+        $this->controller->addProduct($input);
     }
 }

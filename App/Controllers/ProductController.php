@@ -15,13 +15,16 @@ class ProductController extends Controller
         $this->factory = new ProductFactory($this->databaseController);
     }
 
-    public function deleteProducts($productsId)
+    public function deleteProducts($input)
     {
-        Product::deleteProducts($this->databaseController, $productsId);
+        $obj = json_decode($input);
+        Product::deleteProducts($this->databaseController, $obj->data);
     }
-    public function addProduct($product)
+    public function addProduct($input)
     {
-        Product::addProduct($product, $this->databaseController, $this->factory);
+        $obj = json_decode($input); //obj is array of feilds
+        $row = json_decode(json_encode($obj), true);
+        Product::addProduct($row, $this->databaseController, $this->factory);
     }
     public function getGeneralTypes()
     {

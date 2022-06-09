@@ -73,7 +73,7 @@ class MysqlDatabase extends Database
     public function addProduct($product)
     {
         $product_type_id = array_search($product->getType(), ProductType::getInstance($this)->types);
-        echo $product_type_id . '  ' . $product->getSku() . '  ' . $product->getName() . '  ' . $product->getPrice();
+
         $query = "INSERT INTO product (product_type_id , sku ,name , price)
         VALUES (:product_type_id , :sku , :name , :price)";
         $stmt = $this->conn->prepare($query);
