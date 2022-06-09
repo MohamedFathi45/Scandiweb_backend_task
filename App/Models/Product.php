@@ -50,7 +50,6 @@ abstract class Product implements JsonSerializable
     public static function addProduct($row, $db, $factory)
     { // product is array of product attributes
         $product = $factory->setProduct($row['type'], $row);
-        //echo json_encode($product);
         $db->addProduct($product);
     }
 
